@@ -1,0 +1,722 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>AI-Powered Chatbot with n8n | Project Blog</title>
+  <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/themes/prism-tomorrow.min.css">
+</head>
+<body class="bg-gray-50 text-gray-900" data-theme="light">
+  <!-- Navigation -->
+  <nav class="fixed w-full bg-white bg-opacity-90 z-50 shadow-sm border-b border-gray-200">
+    <div class="container mx-auto px-6 py-3 flex justify-between items-center">
+      <a href="index.html" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-500" aria-label="AI Engineer Home">
+        AI<span class="text-blue-500">Engineer</span>
+      </a>
+      <div class="hidden md:flex space-x-10">
+        <a href="index.html#home" class="hover:text-blue-500 transition-colors duration-300" aria-label="Home section">Home</a>
+        <a href="index.html#about" class="hover:text-blue-500 transition-colors duration-300" aria-label="About section">About</a>
+        <a href="index.html#skills" class="hover:text-blue-500 transition-colors duration-300" aria-label="Skills section">Skills</a>
+        <a href="blog.html" class="text-blue-500 border-b-2 border-blue-500 transition-colors duration-300" aria-label="Blog page">Blog</a>
+        <a href="index.html#projects" class="hover:text-blue-500 transition-colors duration-300" aria-label="Projects section">Projects</a>
+        <a href="index.html#contact" class="hover:text-blue-500 transition-colors duration-300" aria-label="Contact section">Contact</a>
+        <a href="assets/resume.pdf" class="resume-download-btn flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300" download aria-label="Download resume">
+          <i class="fas fa-file-download mr-1" aria-hidden="true"></i> Resume
+        </a>
+        <!-- Theme Toggle in Navbar -->
+        <button id="theme-toggle" class="theme-toggle-nav flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300" aria-label="Toggle light/dark theme">
+          <i class="fas fa-sun mr-1" aria-hidden="true"></i> Theme
+        </button>
+      </div>
+      <div class="md:hidden">
+        <button id="menu-toggle" class="focus:outline-none" aria-label="Toggle mobile menu">
+          <i class="fas fa-bars text-2xl" aria-hidden="true"></i>
+        </button>
+      </div>
+    </div>
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden md:hidden bg-white w-full border-b border-gray-200">
+      <div class="container mx-auto px-6 py-4 flex flex-col space-y-4">
+        <a href="index.html#home" class="hover:text-blue-500 transition-colors duration-300" aria-label="Home section">Home</a>
+        <a href="index.html#about" class="hover:text-blue-500 transition-colors duration-300" aria-label="About section">About</a>
+        <a href="index.html#skills" class="hover:text-blue-500 transition-colors duration-300" aria-label="Skills section">Skills</a>
+        <a href="blog.html" class="text-blue-500 font-medium transition-colors duration-300" aria-label="Blog page">Blog</a>
+        <a href="index.html#projects" class="hover:text-blue-500 transition-colors duration-300" aria-label="Projects section">Projects</a>
+        <a href="index.html#contact" class="hover:text-blue-500 transition-colors duration-300" aria-label="Contact section">Contact</a>
+        <a href="assets/resume.pdf" class="resume-download-btn flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300" download aria-label="Download resume">
+          <i class="fas fa-file-download mr-1" aria-hidden="true"></i> Resume
+        </a>
+        <!-- Theme Toggle in Mobile Menu -->
+        <button id="theme-toggle-mobile" class="theme-toggle-nav flex items-center text-blue-500 hover:text-blue-600 transition-colors duration-300" aria-label="Toggle light/dark theme">
+          <i class="fas fa-sun mr-1" aria-hidden="true"></i> Theme
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Blog Post Header -->
+  <header class="pt-32 pb-16 bg-gradient-to-r from-blue-50 to-indigo-50">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row items-center">
+        <div class="md:w-2/3 mb-10 md:mb-0 md:pr-10">
+          <div class="flex items-center mb-4">
+            <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded" aria-label="Project category: LLM">LLM</span>
+            <span class="bg-purple-100 text-purple-800 text-xs font-medium px-2.5 py-0.5 rounded ml-2" aria-label="Project category: RAG">RAG</span>
+            <span class="text-gray-500 text-sm ml-4" aria-label="Reading time: 12 minutes"><i class="far fa-clock mr-1" aria-hidden="true"></i> 12 min read</span>
+          </div>
+          <h1 class="text-4xl md:text-5xl font-bold mb-4 text-gray-800">Building an AI-Powered Chatbot with n8n and RAG</h1>
+          <p class="text-xl text-gray-600 mb-6">A step-by-step guide to creating a document-aware chatbot using Retrieval Augmented Generation</p>
+          <div class="flex items-center">
+            <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author profile" class="w-12 h-12 rounded-full object-cover">
+            <div class="ml-4">
+              <p class="text-gray-800 font-medium">AI Engineer</p>
+              <p class="text-gray-500 text-sm">Published on May 25, 2025</p>
+            </div>
+          </div>
+        </div>
+        <div class="md:w-1/3">
+          <div class="rounded-xl overflow-hidden shadow-lg">
+            <img src="https://images.unsplash.com/photo-1677442135968-6d89485dd9c5?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1632&q=80" alt="AI Chatbot illustration" class="w-full h-64 object-cover">
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Blog Content -->
+  <main class="py-16">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col lg:flex-row">
+        <!-- Main Content -->
+        <div class="lg:w-2/3 lg:pr-12">
+          <article class="prose prose-lg max-w-none">
+            <p>
+              In this comprehensive guide, I'll walk you through the process of building an AI-powered chatbot that can answer questions based on your documents, using n8n for workflow automation and Retrieval Augmented Generation (RAG) for enhanced responses.
+            </p>
+
+            <h2>Introduction to RAG-Powered Chatbots</h2>
+            <p>
+              Retrieval Augmented Generation (RAG) is a technique that enhances large language models by providing them with relevant context from a knowledge base. This approach significantly improves the accuracy and relevance of AI responses, especially when dealing with domain-specific questions or proprietary information.
+            </p>
+            <p>
+              By combining the power of n8n's workflow automation with RAG, we can create a chatbot that:
+            </p>
+            <ul>
+              <li>Processes and indexes documents from various sources</li>
+              <li>Retrieves relevant information based on user queries</li>
+              <li>Generates accurate, contextually appropriate responses</li>
+              <li>Integrates seamlessly with existing systems</li>
+            </ul>
+
+            <!-- YouTube Video Section -->
+            <h2>Video Walkthrough</h2>
+            <p>
+              Before diving into the technical details, watch this video demonstration of the chatbot in action:
+            </p>
+            <div class="aspect-w-16 aspect-h-9 mb-8">
+              <iframe 
+                width="100%" 
+                height="400" 
+                src="https://www.youtube-nocookie.com/embed/Lxa8poQYRtc"
+                title="AI Chatbot with n8n and RAG Demonstration" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen
+                aria-label="Video demonstration of AI Chatbot with n8n and RAG">
+              </iframe>
+            </div>
+
+            <h2>System Architecture</h2>
+            <p>
+              Our chatbot system consists of several key components:
+            </p>
+            <ol>
+              <li><strong>Document Processor:</strong> Handles the ingestion and parsing of various document formats</li>
+              <li><strong>Vector Database:</strong> Stores document embeddings for semantic search</li>
+              <li><strong>n8n Workflow:</strong> Orchestrates the entire process from document ingestion to response generation</li>
+              <li><strong>LLM Integration:</strong> Connects to language models for generating responses</li>
+              <li><strong>User Interface:</strong> Provides a chat interface for user interaction</li>
+            </ol>
+
+            <h2>Setting Up the Environment</h2>
+            <p>
+              Let's start by setting up our development environment. We'll need:
+            </p>
+            <ul>
+              <li>n8n installed and running</li>
+              <li>A vector database (we'll use Qdrant for this tutorial)</li>
+              <li>Access to an LLM API (OpenAI or a self-hosted alternative)</li>
+              <li>Basic knowledge of JavaScript and Python</li>
+            </ul>
+
+            <h3>Installing n8n</h3>
+            <p>
+              First, let's install n8n using npm:
+            </p>
+            <pre><code class="language-bash">npm install n8n -g
+n8n start</code></pre>
+
+            <h3>Setting Up Qdrant</h3>
+            <p>
+              We'll use Docker to run Qdrant:
+            </p>
+            <pre><code class="language-bash">docker pull qdrant/qdrant
+docker run -p 6333:6333 -p 6334:6334 \
+    -v $(pwd)/qdrant_storage:/qdrant/storage \
+    qdrant/qdrant</code></pre>
+
+            <h2>Document Processing Workflow</h2>
+            <p>
+              Now, let's create our n8n workflow for processing documents:
+            </p>
+
+            <h3>Step 1: Document Ingestion</h3>
+            <p>
+              We'll start by creating a workflow that watches a specific folder for new documents:
+            </p>
+            <pre><code class="language-javascript">// n8n workflow - Document Ingestion
+[
+  {
+    "name": "Watch Folder",
+    "type": "n8n-nodes-base.filesWatcher",
+    "parameters": {
+      "path": "/path/to/documents",
+      "fileExtensions": [
+        "pdf",
+        "docx",
+        "txt"
+      ]
+    }
+  },
+  {
+    "name": "Process Document",
+    "type": "n8n-nodes-base.function",
+    "parameters": {
+      "functionCode": `
+        // Document processing code
+        const filePath = $input.item.path;
+        const fileType = filePath.split('.').pop();
+        
+        // Process based on file type
+        let text;
+        if (fileType === 'pdf') {
+          // PDF processing logic
+          text = extractTextFromPDF(filePath);
+        } else if (fileType === 'docx') {
+          // DOCX processing logic
+          text = extractTextFromDOCX(filePath);
+        } else {
+          // Plain text
+          text = readTextFile(filePath);
+        }
+        
+        return {
+          json: {
+            filePath,
+            fileType,
+            text,
+            chunks: chunkText(text, 1000, 200)
+          }
+        };
+      `
+    }
+  }
+]</code></pre>
+
+            <h3>Step 2: Text Embedding</h3>
+            <p>
+              Next, we'll create embeddings for each text chunk:
+            </p>
+            <pre><code class="language-javascript">// n8n workflow - Text Embedding
+{
+  "name": "Create Embeddings",
+  "type": "n8n-nodes-base.openAi",
+  "parameters": {
+    "authentication": "apiKey",
+    "operation": "createEmbedding",
+    "text": "={{ $json.chunks }}",
+    "model": "text-embedding-ada-002"
+  }
+}</code></pre>
+
+            <h3>Step 3: Store in Vector Database</h3>
+            <p>
+              Now, let's store these embeddings in Qdrant:
+            </p>
+            <pre><code class="language-javascript">// n8n workflow - Store in Qdrant
+{
+  "name": "Store in Qdrant",
+  "type": "n8n-nodes-base.httpRequest",
+  "parameters": {
+    "url": "http://localhost:6333/collections/documents/points",
+    "method": "PUT",
+    "authentication": "none",
+    "jsonParameters": true,
+    "bodyParametersJson": `{
+      "points": [
+        {
+          "id": "={{ $json.id }}",
+          "vector": "={{ $json.embedding }}",
+          "payload": {
+            "text": "={{ $json.chunk }}",
+            "source": "={{ $json.filePath }}",
+            "metadata": {
+              "fileType": "={{ $json.fileType }}"
+            }
+          }
+        }
+      ]
+    }`
+  }
+}</code></pre>
+
+            <h2>Building the Chatbot Interface</h2>
+            <p>
+              Now that we have our document processing pipeline set up, let's create the chatbot interface:
+            </p>
+
+            <h3>HTML Structure</h3>
+            <pre><code class="language-html">&lt;div class="chatbot-container"&gt;
+  &lt;div class="chatbot-messages" id="chatMessages"&gt;&lt;/div&gt;
+  &lt;div class="chatbot-input"&gt;
+    &lt;input type="text" id="userInput" placeholder="Ask about the documents..."&gt;
+    &lt;button id="sendButton"&gt;Send&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;</code></pre>
+
+            <h3>JavaScript for the Chatbot</h3>
+            <pre><code class="language-javascript">// Chatbot functionality
+document.addEventListener('DOMContentLoaded', () => {
+  const chatMessages = document.getElementById('chatMessages');
+  const userInput = document.getElementById('userInput');
+  const sendButton = document.getElementById('sendButton');
+
+  // Add event listeners
+  sendButton.addEventListener('click', sendMessage);
+  userInput.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') sendMessage();
+  });
+
+  // Function to send message
+  async function sendMessage() {
+    const message = userInput.value.trim();
+    if (!message) return;
+
+    // Add user message to chat
+    addMessageToChat('user', message);
+    userInput.value = '';
+
+    // Show typing indicator
+    const typingIndicator = addTypingIndicator();
+
+    try {
+      // Call the n8n webhook to process the message
+      const response = await fetch('http://localhost:5678/webhook/chatbot', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ query: message })
+      });
+
+      const data = await response.json();
+      
+      // Remove typing indicator
+      typingIndicator.remove();
+      
+      // Add bot response to chat
+      addMessageToChat('bot', data.response, data.sources);
+    } catch (error) {
+      console.error('Error:', error);
+      typingIndicator.remove();
+      addMessageToChat('bot', 'Sorry, I encountered an error processing your request.');
+    }
+  }
+
+  // Function to add message to chat
+  function addMessageToChat(sender, message, sources = []) {
+    const messageElement = document.createElement('div');
+    messageElement.className = `message ${sender}-message`;
+    
+    // Message content
+    messageElement.innerHTML = `<p>${message}</p>`;
+    
+    // Add sources if available
+    if (sources && sources.length > 0) {
+      const sourcesElement = document.createElement('div');
+      sourcesElement.className = 'message-sources';
+      sourcesElement.innerHTML = '<p><strong>Sources:</strong></p><ul>' + 
+        sources.map(source => `<li>${source}</li>`).join('') + 
+        '</ul>';
+      messageElement.appendChild(sourcesElement);
+    }
+    
+    chatMessages.appendChild(messageElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+  }
+
+  // Function to add typing indicator
+  function addTypingIndicator() {
+    const typingElement = document.createElement('div');
+    typingElement.className = 'typing-indicator';
+    typingElement.innerHTML = '<span></span><span></span><span></span>';
+    chatMessages.appendChild(typingElement);
+    chatMessages.scrollTop = chatMessages.scrollHeight;
+    return typingElement;
+  }
+});</code></pre>
+
+            <h2>Creating the RAG Query Workflow</h2>
+            <p>
+              Finally, let's create the n8n workflow that handles user queries:
+            </p>
+
+            <pre><code class="language-javascript">// n8n workflow - RAG Query Handler
+[
+  {
+    "name": "Webhook",
+    "type": "n8n-nodes-base.webhook",
+    "parameters": {
+      "path": "chatbot",
+      "responseMode": "lastNode",
+      "options": {
+        "responseHeaders": {
+          "entries": [
+            {
+              "name": "Content-Type",
+              "value": "application/json"
+            }
+          ]
+        }
+      }
+    }
+  },
+  {
+    "name": "Create Query Embedding",
+    "type": "n8n-nodes-base.openAi",
+    "parameters": {
+      "authentication": "apiKey",
+      "operation": "createEmbedding",
+      "text": "={{ $json.query }}",
+      "model": "text-embedding-ada-002"
+    }
+  },
+  {
+    "name": "Search Vector DB",
+    "type": "n8n-nodes-base.httpRequest",
+    "parameters": {
+      "url": "http://localhost:6333/collections/documents/points/search",
+      "method": "POST",
+      "authentication": "none",
+      "jsonParameters": true,
+      "bodyParametersJson": `{
+        "vector": "={{ $json.embedding }}",
+        "limit": 5,
+        "with_payload": true
+      }`
+    }
+  },
+  {
+    "name": "Prepare Context",
+    "type": "n8n-nodes-base.function",
+    "parameters": {
+      "functionCode": `
+        // Extract relevant text from search results
+        const results = $input.json.result;
+        const context = results.map(item => item.payload.text).join('\\n\\n');
+        const sources = results.map(item => item.payload.source);
+        
+        return {
+          json: {
+            query: $input.json.query,
+            context,
+            sources
+          }
+        };
+      `
+    }
+  },
+  {
+    "name": "Generate Response",
+    "type": "n8n-nodes-base.openAi",
+    "parameters": {
+      "authentication": "apiKey",
+      "operation": "createChatCompletion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are a helpful assistant that answers questions based on the provided context. If the answer is not in the context, say that you don't know."
+        },
+        {
+          "role": "user",
+          "content": "=== CONTEXT ===\n{{ $json.context }}\n\n=== QUESTION ===\n{{ $json.query }}"
+        }
+      ],
+      "model": "gpt-4",
+      "options": {
+        "temperature": 0.3
+      }
+    }
+  },
+  {
+    "name": "Format Response",
+    "type": "n8n-nodes-base.function",
+    "parameters": {
+      "functionCode": `
+        return {
+          json: {
+            response: $input.json.choices[0].message.content,
+            sources: $input.json.sources
+          }
+        };
+      `
+    }
+  }
+]</code></pre>
+
+            <h2>Conclusion</h2>
+            <p>
+              By following this guide, you've created a powerful AI chatbot that can answer questions based on your documents. The combination of n8n's workflow automation and RAG technology enables you to build sophisticated AI applications without extensive coding.
+            </p>
+            <p>
+              This approach can be extended to handle various document types, integrate with different LLMs, and connect to multiple data sources. The possibilities are endless!
+            </p>
+
+            <h3>Next Steps</h3>
+            <p>
+              To further enhance your chatbot, consider:
+            </p>
+            <ul>
+              <li>Adding authentication to secure your chatbot</li>
+              <li>Implementing conversation history for more contextual responses</li>
+              <li>Creating a feedback mechanism to improve responses over time</li>
+              <li>Deploying your solution to a production environment</li>
+            </ul>
+            
+            <p>
+              I hope you found this guide helpful. If you have any questions or feedback, feel free to reach out!
+            </p>
+          </article>
+
+          <!-- Author Bio -->
+          <div class="mt-16 p-6 bg-white rounded-xl shadow-md border border-gray-100">
+            <div class="flex items-center">
+              <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Author profile" class="w-16 h-16 rounded-full object-cover">
+              <div class="ml-4">
+                <h3 class="text-xl font-bold text-gray-800">About the Author</h3>
+                <p class="text-gray-600">AI Engineer specializing in generative AI and natural language processing. Passionate about building intelligent systems that solve real-world problems.</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Comments Section -->
+          <div class="mt-16">
+            <h3 class="text-2xl font-bold mb-6 text-gray-800">Comments</h3>
+            
+            <!-- Comment Form -->
+            <form class="mb-10">
+              <div class="mb-4">
+                <textarea class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-blue-500 focus:border-blue-500 transition-colors" rows="4" placeholder="Share your thoughts..." aria-label="Comment text"></textarea>
+              </div>
+              <button type="submit" class="px-6 py-3 bg-gradient-to-r from-purple-500 to-blue-500 text-white font-medium rounded-lg hover:opacity-90 transition-all duration-300 shadow-md" aria-label="Post comment">
+                Post Comment
+              </button>
+            </form>
+            
+            <!-- Comment List -->
+            <div class="space-y-8">
+              <!-- Comment 1 -->
+              <div class="p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div class="flex items-start">
+                  <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="Commenter profile" class="w-10 h-10 rounded-full object-cover">
+                  <div class="ml-4 flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                      <h4 class="font-medium text-gray-800">Sarah Johnson</h4>
+                      <span class="text-gray-500 text-sm">2 days ago</span>
+                    </div>
+                    <p class="text-gray-600">This is exactly what I was looking for! I've been trying to build something similar but was stuck on the vector database integration. Your explanation made it clear.</p>
+                    <div class="mt-3 flex items-center space-x-4">
+                      <button class="text-gray-500 hover:text-blue-500 flex items-center" aria-label="Like comment">
+                        <i class="far fa-thumbs-up mr-1" aria-hidden="true"></i> 12
+                      </button>
+                      <button class="text-gray-500 hover:text-blue-500" aria-label="Reply to comment">Reply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              
+              <!-- Comment 2 -->
+              <div class="p-6 bg-white rounded-xl shadow-sm border border-gray-100">
+                <div class="flex items-start">
+                  <img src="https://randomuser.me/api/portraits/men/67.jpg" alt="Commenter profile" class="w-10 h-10 rounded-full object-cover">
+                  <div class="ml-4 flex-1">
+                    <div class="flex justify-between items-center mb-1">
+                      <h4 class="font-medium text-gray-800">Michael Chen</h4>
+                      <span class="text-gray-500 text-sm">1 day ago</span>
+                    </div>
+                    <p class="text-gray-600">Have you considered using LangChain for this? It might simplify some of the workflow steps. Great tutorial nonetheless!</p>
+                    <div class="mt-3 flex items-center space-x-4">
+                      <button class="text-gray-500 hover:text-blue-500 flex items-center" aria-label="Like comment">
+                        <i class="far fa-thumbs-up mr-1" aria-hidden="true"></i> 8
+                      </button>
+                      <button class="text-gray-500 hover:text-blue-500" aria-label="Reply to comment">Reply</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Sidebar -->
+        <div class="lg:w-1/3 mt-12 lg:mt-0">
+          <!-- Table of Contents -->
+          <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 mb-8 sticky top-24">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Table of Contents</h3>
+            <nav class="toc">
+              <ul class="space-y-2">
+                <li><a href="#introduction-to-rag-powered-chatbots" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Introduction section">Introduction to RAG-Powered Chatbots</a></li>
+                <li><a href="#video-walkthrough" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Video Walkthrough section">Video Walkthrough</a></li>
+                <li><a href="#system-architecture" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to System Architecture section">System Architecture</a></li>
+                <li><a href="#setting-up-the-environment" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Setting Up the Environment section">Setting Up the Environment</a></li>
+                <li><a href="#document-processing-workflow" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Document Processing Workflow section">Document Processing Workflow</a></li>
+                <li><a href="#building-the-chatbot-interface" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Building the Chatbot Interface section">Building the Chatbot Interface</a></li>
+                <li><a href="#creating-the-rag-query-workflow" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Creating the RAG Query Workflow section">Creating the RAG Query Workflow</a></li>
+                <li><a href="#conclusion" class="text-blue-600 hover:text-blue-800 transition-colors" aria-label="Jump to Conclusion section">Conclusion</a></li>
+              </ul>
+            </nav>
+          </div>
+          
+          <!-- Related Posts -->
+          <div class="bg-white rounded-xl p-6 shadow-md border border-gray-100 mb-8">
+            <h3 class="text-xl font-bold mb-4 text-gray-800">Related Posts</h3>
+            <div class="space-y-4">
+              <a href="#" class="flex items-center group" aria-label="Read related post about Fine-tuning LLMs">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1465&q=80" alt="Fine-tuning LLMs" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-medium text-gray-800 group-hover:text-blue-600 transition-colors">Fine-tuning LLMs for Domain-Specific Applications</h4>
+                  <p class="text-gray-500 text-sm">May 15, 2025</p>
+                </div>
+              </a>
+              
+              <a href="#" class="flex items-center group" aria-label="Read related post about Vector Databases">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1682687982107-14492010e05e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1471&q=80" alt="Vector Databases" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-medium text-gray-800 group-hover:text-blue-600 transition-colors">Vector Databases: A Comprehensive Guide</h4>
+                  <p class="text-gray-500 text-sm">April 28, 2025</p>
+                </div>
+              </a>
+              
+              <a href="#" class="flex items-center group" aria-label="Read related post about n8n Workflows">
+                <div class="w-20 h-20 rounded-lg overflow-hidden flex-shrink-0">
+                  <img src="https://images.unsplash.com/photo-1633613286991-611fe299c4be?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1470&q=80" alt="n8n Workflows" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300">
+                </div>
+                <div class="ml-4">
+                  <h4 class="font-medium text-gray-800 group-hover:text-blue-600 transition-colors">Automating AI Workflows with n8n</h4>
+                  <p class="text-gray-500 text-sm">April 10, 2025</p>
+                </div>
+              </a>
+            </div>
+          </div>
+          
+          <!-- Newsletter Signup -->
+          <div class="bg-gradient-to-r from-blue-500 to-purple-600 rounded-xl p-6 shadow-md text-white">
+            <h3 class="text-xl font-bold mb-2">Subscribe to Newsletter</h3>
+            <p class="mb-4 opacity-90">Get the latest AI engineering tips and tutorials delivered to your inbox.</p>
+            <form class="space-y-3">
+              <input type="email" placeholder="Your email address" class="w-full px-4 py-3 rounded-lg text-gray-800 focus:ring-blue-300 focus:border-blue-300" aria-label="Email address for newsletter">
+              <button type="submit" class="w-full px-4 py-3 bg-white text-blue-600 font-medium rounded-lg hover:bg-blue-50 transition-colors duration-300" aria-label="Subscribe to newsletter">
+                Subscribe
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-white py-12 border-t border-gray-200">
+    <div class="container mx-auto px-6">
+      <div class="flex flex-col md:flex-row justify-between items-center">
+        <div class="mb-6 md:mb-0">
+          <a href="#" class="text-2xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-purple-500 to-blue-500" aria-label="AI Engineer Home">
+            AI<span class="text-blue-500">Engineer</span>
+          </a>
+          <p class="text-gray-600 mt-2">Building intelligent solutions with AI</p>
+        </div>
+        <div class="flex space-x-6">
+          <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors" aria-label="GitHub profile">
+            <i class="fab fa-github text-xl" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors" aria-label="LinkedIn profile">
+            <i class="fab fa-linkedin text-xl" aria-hidden="true"></i>
+          </a>
+          <a href="#" class="text-gray-600 hover:text-blue-500 transition-colors" aria-label="Twitter profile">
+            <i class="fab fa-twitter text-xl" aria-hidden="true"></i>
+          </a>
+        </div>
+      </div>
+      <div class="border-t border-gray-200 mt-8 pt-8 flex flex-col md:flex-row justify-between items-center">
+        <p class="text-gray-600 text-sm">© 2025 AI Engineer. All rights reserved.</p>
+        <div class="flex space-x-6 mt-4 md:mt-0">
+          <a href="#" class="text-gray-600 hover:text-blue-500 text-sm transition-colors" aria-label="Privacy Policy">Privacy Policy</a>
+          <a href="#" class="text-gray-600 hover:text-blue-500 text-sm transition-colors" aria-label="Terms of Service">Terms of Service</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Chatbot Widget -->
+  <div class="chatbot-widget">
+    <div class="chatbot-button" aria-label="Open AI Assistant chat" title="Chat with AI Assistant">
+      <i class="fas fa-comment-dots chatbot-icon" aria-hidden="true"></i>
+      <div class="notification-badge" aria-label="1 new message">1</div>
+    </div>
+    <div class="chatbot-container">
+      <div class="chatbot-header">
+        <div class="chatbot-title">
+          <i class="fas fa-robot" aria-hidden="true"></i> AI Assistant
+        </div>
+        <div class="chatbot-close" aria-label="Close chat" title="Close chat">×</div>
+      </div>
+      <div class="chatbot-provider-selector">
+        <div class="provider-option active" data-provider="openai" role="button" aria-label="Select OpenAI model" title="Use OpenAI model">OpenAI</div>
+        <div class="provider-option" data-provider="huggingface" role="button" aria-label="Select Hugging Face model" title="Use Hugging Face model">Hugging Face</div>
+      </div>
+      <div class="chatbot-messages" aria-live="polite"></div>
+      <div class="chatbot-input-container">
+        <input type="text" class="chatbot-input" placeholder="Ask me anything..." aria-label="Type your message">
+        <div class="chatbot-send" role="button" aria-label="Send message" title="Send message">
+          <i class="fas fa-paper-plane" aria-hidden="true"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Language Switcher -->
+  <div class="language-switcher">
+    <div class="language-option active" data-lang="en" role="button" aria-label="Switch to English" title="English">EN</div>
+    <div class="language-option" data-lang="de" role="button" aria-label="Switch to German" title="Deutsch">DE</div>
+  </div>
+
+  <!-- JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/prism.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-bash.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-javascript.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.24.1/components/prism-python.min.js"></script>
+  <script src="script.js"></script>
+  <script src="language-switcher.js"></script>
+  <script src="chatbot.js"></script>
+</body>
+</html>
