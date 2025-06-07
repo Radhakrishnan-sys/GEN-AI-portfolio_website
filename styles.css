@@ -3,9 +3,9 @@
 /* Base Theme Variables - Light Theme (Primary) */
 :root {
   /* Primary Colors - Vibrant Gen AI Palette */
-  --primary-color: #6366f1; /* Indigo */
-  --primary-color-light: #818cf8;
-  --primary-color-dark: #4f46e5;
+  --primary-color: #3b82f6; /* Blue - more professional */
+  --primary-color-light: #60a5fa;
+  --primary-color-dark: #2563eb;
   
   /* Secondary Colors */
   --secondary-color: #10b981; /* Emerald */
@@ -23,9 +23,9 @@
   --accent-gradient: linear-gradient(to right, var(--secondary-color), #f59e0b);
   
   /* Background Colors */
-  --bg-primary: #ffffff;
-  --bg-secondary: #f3f4f6;
-  --bg-tertiary: #e5e7eb;
+  --bg-primary: #f8fafc; /* Lighter, more professional background */
+  --bg-secondary: #f1f5f9;
+  --bg-tertiary: #e2e8f0;
   --card-bg: #ffffff;
   --card-bg-hover: #f9fafb;
   
@@ -61,11 +61,11 @@
 /* Dark Theme Variables */
 [data-theme="dark"] {
   /* Background Colors */
-  --bg-primary: #111827;
-  --bg-secondary: #1f2937;
-  --bg-tertiary: #374151;
-  --card-bg: #1f2937;
-  --card-bg-hover: #2d3748;
+  --bg-primary: #0f172a; /* Darker, more elegant background */
+  --bg-secondary: #1e293b;
+  --bg-tertiary: #334155;
+  --card-bg: #1e293b;
+  --card-bg-hover: #334155;
   
   /* Text Colors */
   --text-primary: #f9fafb;
@@ -1199,3 +1199,15 @@ a:hover {
 @keyframes blink-cursor {
   50% { opacity: 0; }
 }
+/* Enhanced Hero Section Background */
+section#home {
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 50%, #bae6fd 100%) !important;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Dark theme hero section */
+[data-theme="dark"] section#home {
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #334155 100%) !important;
+}
+
